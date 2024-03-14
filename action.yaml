@@ -1,0 +1,11 @@
+name: Release To Version
+description: Get the version information from github release and save the version information to the github repository.
+
+inputs:
+  debug:
+    description: 是否输出调试信息
+    default: "false"
+
+runs:
+  using: docker
+  image: Dockerfile

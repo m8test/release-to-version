@@ -1,0 +1,17 @@
+{
+  "name": "release-to-version",
+  "version": "1.0.0",
+  "description": "Get the version information from github release and save the version information to the github repository.",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "npx webpack --mode=development && node dist/main.js",
+    "build": "npx webpack --mode=production"
+  },
+  "author": "m8test",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "1.10.1",
+    "@actions/exec": "1.1.1",
+    "@actions/github": "6.0.0"
+  }
+}
