@@ -8,11 +8,16 @@ on:
         description: 是否开启调试模式
         default: true
 
+env:
+  REPOSITORY: m8test/release-to-version@main
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: .
+        with:
+          repository: ${{ env.REPOSITORY }}
+      - uses: ${{ env.REPOSITORY }}
         with:
           debug: ${{ inputs.debug }}
