@@ -18,8 +18,21 @@ env:
   REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
 
 jobs:
-  test:
+  jest:
     runs-on: ubuntu-latest
+    steps:
+      - name: 下载代码
+        uses: actions/checkout@v4
+        with:
+          repository: m8test/release-to-version@main
+      - name: 安装依赖并启动 jest
+        run: |
+          npm install
+          npm run jest
+  test-docker:
+    runs-on: ubuntu-latest
+    needs:
+      - jest
     steps:
       - name: 使用 actions
         uses: m8test/release-to-version@main
