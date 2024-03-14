@@ -24,7 +24,7 @@ jobs:
       - name: 下载代码
         uses: actions/checkout@v4
         with:
-          repository: m8test/release-to-version@main
+          repository: m8test/release-to-version
       - name: 安装依赖并启动 jest
         run: |
           npm install
