@@ -2,6 +2,7 @@ const core = require("@actions/core")
 const github = require("@actions/github")
 const exec = require("@actions/exec")
 const axios = require("axios");
+const {getLatestRelease, getVersionInfo} = require("./release");
 
 const setupGit = async () => {
     await exec.exec(`git config --global user.name "gh-automation"`);
@@ -28,9 +29,12 @@ async function run() {
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
     logger.info(`仓库:${repository}`)
     // 请求 url
-    const url = `https://api.github.com/repos/${repository}/releases/latest`
-    let json = (await axios.get(url)).data
-    logger.debug(json)
+    let data = getLatestRelease(repository)
+    logger.debug(JSON.stringify(data))
+    let versions = getVersionInfo(data)
+    versions.forEach((item) => {
+        logger.debug(item)
+    })
     logger.info("运行结束")
 }
 
