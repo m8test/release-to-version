@@ -5,6 +5,10 @@ inputs:
   debug:
     description: 是否输出调试信息
     default: "false"
+  repository:
+    description: 需要检查的仓库
+    default: ""
+    required: true
 
 runs:
   using: docker

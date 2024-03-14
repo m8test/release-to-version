@@ -7,9 +7,10 @@ on:
         type: boolean
         description: 是否开启调试模式
         default: true
-
-env:
-  REPOSITORY: m8test/release-to-version@main
+      repository:
+        type: string
+        default: ""
+        description: 需要获取信息的仓库，必须为公开类型的仓库
 
 jobs:
   test:
@@ -19,3 +20,4 @@ jobs:
         uses: m8test/release-to-version@main
         with:
           debug: ${{ inputs.debug }}
+          repository: kkevsekk1/AutoX
