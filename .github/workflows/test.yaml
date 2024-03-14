@@ -12,6 +12,10 @@ on:
         default: ""
         description: 需要获取信息的仓库，必须为公开类型的仓库
 
+env:
+  DEBUG: ${{ inputs.debug || false }}
+  REPOSITORY: ${{ input.repository || 'kkevsekk1/AutoX' }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,5 +23,5 @@ jobs:
       - name: 使用 actions
         uses: m8test/release-to-version@main
         with:
-          debug: ${{ inputs.debug }}
-          repository: kkevsekk1/AutoX
+          debug: ${{ env.DEBUG }}
+          repository: ${{ env.REPOSITORY }}
