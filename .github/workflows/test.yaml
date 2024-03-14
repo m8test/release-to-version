@@ -15,9 +15,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ env.REPOSITORY }}
-      - uses: m8test/release-to-version@main
+      - name: 使用 actions
+        uses: m8test/release-to-version@main
         with:
           debug: ${{ inputs.debug }}
