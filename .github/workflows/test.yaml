@@ -15,7 +15,7 @@ on:
 
 env:
   DEBUG: ${{ inputs.debug || false }}
-  REPOSITORY: ${{ input.repository || 'kkevsekk1/AutoX' }}
+  REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
 
 jobs:
   test:
