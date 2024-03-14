@@ -14,7 +14,7 @@ on:
         description: 需要获取信息的仓库，必须为公开类型的仓库
 
 env:
-  DEBUG: ${{ inputs.debug || false }}
+  DEBUG: ${{ inputs.debug || true }}
   REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
 
 jobs:
