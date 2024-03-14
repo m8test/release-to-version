@@ -22,9 +22,9 @@ const setupLogger = ({debug, prefix} = {debug: false, prefix: ''}) => ({
 });
 
 async function run() {
-    const debug = core.getBooleanInput("debug")
-    const logger = setupLogger({debug, prefix: '[release-to-version]'});
-    logger.info("hello world from the docker action")
+    // const debug = core.getBooleanInput("debug")
+    // const logger = setupLogger({debug, prefix: '[release-to-version]'});
+    // logger.info("hello world from the docker action")
     console.log(core)
     console.log(github)
     console.log(exec)
