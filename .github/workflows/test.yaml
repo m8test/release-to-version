@@ -1,5 +1,5 @@
 name: "测试docker workflows是否正确执行"
-run-name: 测试docker workflows是否正确执行 | 调试模式 - ${{ inputs.debug }}
+run-name: "测试docker workflows是否正确执行 | 调试模式 - ${{ inputs.debug }}"
 on:
   workflow_dispatch:
     inputs:
