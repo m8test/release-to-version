@@ -1,5 +1,5 @@
 name: "测试docker workflows是否正确执行"
-
+run-name: "测试docker workflows是否正确执行 | 调试模式 - ${{ inputs.debug }}"
 on:
   workflow_dispatch:
     inputs:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
