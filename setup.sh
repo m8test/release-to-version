@@ -1,1 +1,1 @@
-echo "hello from setup.sh"
+echo "hello from setup.sh $1"
