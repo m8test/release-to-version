@@ -28,7 +28,7 @@ jobs:
       - name: 安装依赖并启动 jest
         run: |
           npm install
-          npm run jest
+          npm run test
   test-docker:
     runs-on: ubuntu-latest
     needs:
