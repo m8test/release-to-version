@@ -13,4 +13,4 @@ inputs:
 runs:
   using: docker
   image: "Dockerfile"
-  pre-entrypoint: setup.js
+  pre-entrypoint: setup.sh
