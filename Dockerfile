@@ -1,5 +1,5 @@
 FROM node:21-alpine
-ARG PROJECT_DIR=/node-app
+ENV PROJECT_DIR=/node-app
 WORKDIR $PROJECT_DIR
 
 COPY . .
