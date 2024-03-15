@@ -36,7 +36,9 @@ async function run() {
     versions.forEach((item) => {
         logger.debug(JSON.stringify(item))
     })
-    core.setOutput("js", "js输出值")
+    // 将版本信息写入文件
+    core.setOutput("version", `${data.version_name}`)
+    core.setOutput("update_content", `${data.body}`)
     logger.info("运行结束")
 }
 
