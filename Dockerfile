@@ -1,4 +1,4 @@
-FROM node:21
+FROM node:21-alpine
 ARG PROJECT_DIR=/node-app
 WORKDIR $PROJECT_DIR
 

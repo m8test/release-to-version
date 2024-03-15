@@ -29,7 +29,6 @@ async function run() {
     logger.info(`仓库:${repository}`)
     // 请求 url
     let data = getLatestRelease(repository)
-    await exec.exec(`curl https://api.github.com/repos/${repository}/releases/latest`,[],{})
     logger.debug(JSON.stringify(data))
     let versions = getVersionInfo(data)
     versions.forEach((item) => {
