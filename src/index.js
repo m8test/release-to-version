@@ -1,6 +1,7 @@
 const core = require("@actions/core")
 const github = require("@actions/github")
 const exec = require("@actions/exec")
+const axios = require("axios");
 const {getLatestRelease, getVersionInfo} = require("./release");
 
 const setupGit = async () => {
@@ -28,7 +29,7 @@ async function run() {
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
     logger.info(`仓库:${repository}`)
     // 请求 url
-    let data = getLatestRelease(repository)
+    let data = await getLatestRelease(repository)
     logger.debug(JSON.stringify(data))
     let versions = getVersionInfo(data)
     versions.forEach((item) => {
