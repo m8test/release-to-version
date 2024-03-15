@@ -34,6 +34,8 @@ jobs:
 #    needs:
 #      - jest
     steps:
+      - name: 下载仓库代码
+        uses: actions/checkout@v4
       - name: 使用 actions
         id: release
         uses: ./.github/actions/version
