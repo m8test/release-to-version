@@ -6,6 +6,8 @@ async function getLatestRelease(repository) {
     return axios.get(url).then(res => {
         console.log(`res:${res.data}`)
         return Promise.resolve(res.data)
+    }).catch(e => {
+        console.error(e)
     })
 }
 
