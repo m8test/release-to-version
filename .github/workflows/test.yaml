@@ -1,5 +1,5 @@
 name: "测试docker workflows是否正确执行"
-run-name: "测试docker workflows是否正确执行 | ${{ github.event }} 调试模式 - ${{ inputs.debug || github.event == 'push' }}"
+run-name: "测试docker workflows是否正确执行 | ${{ github.event_name }} 调试模式 - ${{ inputs.debug || github.event_name == 'push' }}"
 on:
   push:
   workflow_dispatch:
@@ -14,7 +14,7 @@ on:
         description: 需要获取信息的仓库，必须为公开类型的仓库
 
 env:
-  DEBUG: ${{ inputs.debug || github.event == 'push' }}
+  DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
   REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
 
 jobs:
