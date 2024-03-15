@@ -4,7 +4,9 @@
   "description": "Get the version information from github release and save the version information to the github repository.",
   "main": "src/index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "build": "npx webpack --mode=production",
+    "dev": "npx webpack --mode=development && node dist/main.js"
   },
   "author": "m8test",
   "license": "ISC",
@@ -16,6 +18,9 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "node-polyfill-webpack-plugin": "^3.0.0",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
   }
 }

@@ -2,12 +2,8 @@ const axios = require("axios");
 
 async function getLatestRelease(repository) {
     const url = `https://api.github.com/repos/${repository}/releases/latest`
-    console.log(`url:${url}`)
     return axios.get(url).then(res => {
-        console.log(`res:${res.data}`)
         return Promise.resolve(res.data)
-    }).catch(e => {
-        console.error(e)
     })
 }
 
