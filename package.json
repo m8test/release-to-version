@@ -4,7 +4,7 @@
   "description": "Get the version information from github release and save the version information to the github repository.",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "npx jest"
   },
   "author": "m8test",
   "license": "ISC",
