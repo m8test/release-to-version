@@ -14,4 +14,4 @@ runs:
   using: docker
   image: "Dockerfile"
   pre-entrypoint: setup.js
-  pre-if: ${{ inputs.debug }}
+  pre-if: ${{ inputs.debug == "true" }}
