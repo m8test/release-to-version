@@ -28,12 +28,13 @@ async function run() {
     const repository = core.getInput("repository", {required: true})
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
     logger.info(`仓库:${repository}`)
-    // 请求 url
+    // 请求仓库 release url
     let data = await getLatestRelease(repository)
     logger.debug(JSON.stringify(data))
     let versions = getVersionInfo(data)
+    // 遍历所有的版本信息
     versions.forEach((item) => {
-        logger.debug(item)
+        logger.debug(JSON.stringify(item))
     })
     logger.info("运行结束")
 }
