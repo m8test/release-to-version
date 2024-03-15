@@ -35,7 +35,12 @@ jobs:
 #      - jest
     steps:
       - name: 使用 actions
+        id: release
         uses: m8test/release-to-version@main
         with:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
+      - name: 打印输出结果
+        run: |
+          echo "js: ${{steps.release.outputs.js}}"
+          echo "sh: ${{steps.release.outputs.sh}}"

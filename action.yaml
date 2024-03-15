@@ -10,6 +10,12 @@ inputs:
     default: ""
     required: true
 
+outputs:
+  js:
+    description: js返回的值
+  sh:
+    description: sh返回的值
+
 runs:
   using: docker
   image: "Dockerfile"

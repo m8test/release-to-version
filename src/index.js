@@ -36,6 +36,7 @@ async function run() {
     versions.forEach((item) => {
         logger.debug(JSON.stringify(item))
     })
+    core.setOutput("js", "js输出值")
     logger.info("运行结束")
 }
 
