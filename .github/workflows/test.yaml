@@ -18,21 +18,21 @@ env:
   REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
 
 jobs:
-#  jest:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: 下载代码
-#        uses: actions/checkout@v4
-#        with:
-#          repository: m8test/release-to-version
-#      - name: 安装依赖并启动 jest
-#        run: |
-#          npm install
-#          npm run test
+  #  jest:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: 下载代码
+  #        uses: actions/checkout@v4
+  #        with:
+  #          repository: m8test/release-to-version
+  #      - name: 安装依赖并启动 jest
+  #        run: |
+  #          npm install
+  #          npm run test
   test-docker:
     runs-on: ubuntu-latest
-#    needs:
-#      - jest
+    #    needs:
+    #      - jest
     steps:
       - name: 下载仓库代码
         uses: actions/checkout@v4
@@ -44,5 +44,5 @@ jobs:
           repository: ${{ env.REPOSITORY }}
       - name: 打印输出结果
         run: |
-          echo "js: ${{steps.release.outputs.js}}"
-          echo "sh: ${{steps.release.outputs.sh}}"
+          echo "最新版本: ${{steps.release.outputs.version}}"
+          echo "最新版本更新内容: ${{steps.release.outputs.update_content}}"
