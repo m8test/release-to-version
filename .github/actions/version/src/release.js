@@ -21,7 +21,7 @@ class VersionInfo {
 function getVersionInfo(release) {
     let arr = []
     release.assets.forEach((value, index, array) => {
-        arr.push(new VersionInfo(release.version_name, release.body, value.browser_download_url, value.name, value.updated_at, value.size))
+        arr.push(new VersionInfo(release.tag_name, release.body, value.browser_download_url, value.name, value.updated_at, value.size))
     })
     return arr
 }

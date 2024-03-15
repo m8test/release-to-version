@@ -37,7 +37,7 @@ async function run() {
         logger.debug(JSON.stringify(item))
     })
     // 将版本信息写入文件
-    core.setOutput("version", `${data.version_name}`)
+    core.setOutput("version", `${data.tag_name}`)
     core.setOutput("update_content", `${data.body}`)
     logger.info("运行结束")
 }
