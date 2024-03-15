@@ -1,9 +1,9 @@
 FROM node:21-alpine
-ENV PROJECT_DIR=/node-app
+ARG PROJECT_DIR=/node-app
 WORKDIR $PROJECT_DIR
 
 COPY . .
 
 RUN chmod +x $PROJECT_DIR/setup.sh
 
-ENTRYPOINT ["$PROJECT_DIR/setup.sh", "$PROJECT_DIR"]
+ENTRYPOINT ["/node-app/setup.sh", "/node-app"]
