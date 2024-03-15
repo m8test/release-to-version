@@ -14,7 +14,6 @@ class VersionInfo {
         this.browser_download_url = browser_download_url
         this.filename = filename
         this.update_at = update_at
-        this.content_type = content_type
         this.size = size
     }
 }
@@ -22,7 +21,7 @@ class VersionInfo {
 function getVersionInfo(release) {
     let arr = []
     release.assets.forEach((value, index, array) => {
-        arr.push(new VersionInfo(release.version_name, release.body, value.browser_download_url, value.name, value.updated_at, value.content_type, value.size))
+        arr.push(new VersionInfo(release.version_name, release.body, value.browser_download_url, value.name, value.updated_at, value.size))
     })
     return arr
 }
