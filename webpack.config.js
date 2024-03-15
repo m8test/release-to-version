@@ -1,40 +1,43 @@
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
-const webpack = require('webpack')
+'use strict';
 
+const path = require('path');
+let externals = _externals();
 module.exports = {
-    plugins: [
-        new NodePolyfillPlugin(),
-        new webpack.NormalModuleReplacementPlugin(/node:/, (resource) => {
-            const mod = resource.request.replace(/^node:/, "");
-            // console.log(mod)
-            switch (mod) {
-                case "util":
-                case "stream":
-                case "events":
-                    resource.request = mod
-                    break
-            }
-        }),
-    ],
-    // ... other webpack config
-    resolve: {
-        fallback: {
-            // Use can only include required modules. Also install the package.
-            // for example: npm install --save-dev assert
-            fs: false,
-            stream: false,
-            util: false,
-            diagnostics_channel: false,
-            worker_threads: false,
-            perf_hooks: false,
-            http2: false,
-            child_process: false,
-            net: false,
-            tls: false,
-            async_hooks: false
-        }
+    entry: './src/index.js',
+    externals: externals,
+    target: 'node',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'main.js'
     },
-    stats: {
-        errorDetails: true
+    node: {__dirname: true},
+    module: {
+        rules: [
+            {
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [['@babel/preset-env', {
+                            "targets": {
+                                "node": true
+                            }
+                        }]]
+                    }
+                },
+                test: /\.js$/,
+                exclude: /node_modules/
+            }
+        ]
+    },
+    optimization: {minimize: true}
+};
+
+function _externals() {
+    let manifest = require('./package.json');
+    let dependencies = manifest.dependencies;
+    let externals = {};
+    for (let p in dependencies) {
+        externals[p] = 'commonjs ' + p;
     }
+    return externals;
 }
