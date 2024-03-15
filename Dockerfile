@@ -6,4 +6,4 @@ COPY . .
 
 RUN npm install
 
-CMD ["npm run debug"]
+CMD ["node","/node-app/src/index.js"]
