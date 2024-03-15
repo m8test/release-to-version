@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: 使用 actions
         id: release
-        uses: ./github/actions/version
+        uses: .github/actions/version
         with:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
