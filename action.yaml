@@ -13,7 +13,3 @@ inputs:
 runs:
   using: docker
   image: "Dockerfile"
-  args:
-    - cd /node-app
-    - npm run prod
-#    - ${{ inputs.debug && "npm run debug" || "npm run prod" }}
