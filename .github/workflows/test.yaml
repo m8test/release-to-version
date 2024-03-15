@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: 使用 actions
         id: release
-        uses: m8test/release-to-version@main
+        uses: ./github/actions/version
         with:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
