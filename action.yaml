@@ -12,5 +12,6 @@ inputs:
 
 runs:
   using: docker
-  # 如果是调试模式的话则使用 Dockerfile-debug 文件,否则使用 Dockerfile 文件
-  image: ${{ inputs.debug && "Dockerfile-debug" || "Dockerfile" }}
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.debug && "npm run debug" || "npm run prod" }}

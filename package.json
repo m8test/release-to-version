@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npx jest",
     "build": "npx webpack --mode=production",
-    "dev": "npx webpack --mode=development && node dist/main.js"
+    "dev": "npx webpack --mode=development && node dist/main.js",
+    "debug": "node src/index.js",
+    "prod": "npx webpack --mode=production && node dist/main.js"
   },
   "author": "m8test",
   "license": "ISC",
