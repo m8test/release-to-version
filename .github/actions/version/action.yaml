@@ -24,7 +24,5 @@ outputs:
     description: 最新版本更新内容
 
 runs:
-  using: docker
-  image: "Dockerfile"
-  args:
-    - ${{ inputs.debug }}
+  using: node20
+  main: dist/main.js
