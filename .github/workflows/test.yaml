@@ -36,6 +36,13 @@ jobs:
     steps:
       - name: 下载仓库代码
         uses: actions/checkout@v4
+      - name: 打印环境变量
+        run: | 
+          echo "GITHUB_ACTION_PATH=${{ env.GITHUB_ACTION_PATH }}"
+          echo "GITHUB_ENV=${{ env.GITHUB_ENV }}"
+          echo "GITHUB_OUTPUT=${{ env.GITHUB_OUTPUT }}"
+          echo "GITHUB_PATH=${{ env.GITHUB_PATH }}"
+          echo "GITHUB_WORKSPACE=${{ env.GITHUB_WORKSPACE }}"
       - name: 使用 actions
         id: release
         uses: ./.github/actions/version
