@@ -1,5 +1,5 @@
-name: "测试docker workflows是否正确执行"
-run-name: " run | ${{ github.event_name }} | debug - ${{ inputs.debug || github.event_name == 'push' }}"
+name: "更新版本信息"
+run-name: " 更新版本信息 | ${{ github.event_name }} | debug - ${{ inputs.debug || github.event_name == 'push' }}"
 on:
   release:
     types:
