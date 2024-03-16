@@ -1,10 +1,10 @@
 'use strict';
 
 const path = require('path');
-let externals = _externals();
+// let externals = _externals();
 module.exports = {
     entry: './src/index.js',
-    externals: externals,
+    // externals: externals,
     target: 'node',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -32,12 +32,12 @@ module.exports = {
     optimization: {minimize: true}
 };
 
-function _externals() {
-    let manifest = require('./package.json');
-    let dependencies = manifest.dependencies;
-    let externals = {};
-    for (let p in dependencies) {
-        externals[p] = 'commonjs ' + p;
-    }
-    return externals;
-}
+// function _externals() {
+//     let manifest = require('./package.json');
+//     let dependencies = manifest.dependencies;
+//     let externals = {};
+//     for (let p in dependencies) {
+//         externals[p] = 'commonjs ' + p;
+//     }
+//     return externals;
+// }
