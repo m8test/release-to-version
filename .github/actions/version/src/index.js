@@ -46,14 +46,16 @@ async function run() {
         cwd: workingDirectory,
     };
     // 将版本信息写入文件
-    fs.writeFileSync(path.join(workingDirectory, outputFile), JSON.stringify(versions))
-    let output = await exec.getExecOutput("git status -s", {...commonExecOpts})
+    let file = path.join(workingDirectory, outputFile);
+    logger.debug(`开始写入版本信息到文件:${file}`)
+    fs.writeFileSync(file, JSON.stringify(versions))
+    let output = await exec.getExecOutput("git status -s", [], {...commonExecOpts})
     if (output.stdout.length > 0) {
         // 文件更改了
         logger.info(`发现新版本,开始提交`)
-        await exec.exec("git add .", {...commonExecOpts})
-        await exec.exec(`git commit -m "${data.body}"`, {...commonExecOpts})
-        await exec.exec(`git push"`, {...commonExecOpts})
+        await exec.exec("git add .", [], {...commonExecOpts})
+        await exec.exec(`git commit -m "${data.body}"`, [], {...commonExecOpts})
+        await exec.exec(`git push"`, [], {...commonExecOpts})
     } else {
         logger.info(`没有发现新版本`)
     }
