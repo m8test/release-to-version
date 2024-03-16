@@ -25,7 +25,6 @@ on:
         default: false
 
 env:
-  JEST: ${{ inputs.jest || github.event_name != 'push' }}
   DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
   REPOSITORY: ${{ inputs.repository || github.repository }}
   BRANCH: ${{ inputs.branch || 'main' }}
@@ -48,8 +47,6 @@ jobs:
           npm run test
   version:
     runs-on: ubuntu-latest
-    needs:
-      - jest
     steps:
       - name: 下载仓库代码
         uses: actions/checkout@v4
