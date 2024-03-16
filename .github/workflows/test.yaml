@@ -42,7 +42,7 @@ jobs:
         with:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
-          output_name: version.json
+          output_file: version.json
           working_directory: ${{ github.workspace }}
       - name: 打印输出结果
         run: |
