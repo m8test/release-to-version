@@ -1,12 +1,12 @@
 const core = require("@actions/core")
 const github = require("@actions/github")
 const exec = require("@actions/exec")
-const axios = require("axios");
 const {getLatestRelease, getVersionInfo} = require("./release");
+const fs = require("fs");
 
 const setupGit = async () => {
-    await exec.exec(`git config --global user.name "gh-automation"`);
-    await exec.exec(`git config --global user.email "gh-automation@email.com"`);
+    await exec.exec(`git config --global user.name "github-actions"`);
+    await exec.exec(`git config --global user.email "github@m8test.com"`);
 };
 
 const setupLogger = ({debug, prefix} = {debug: false, prefix: ''}) => ({
@@ -36,7 +36,9 @@ async function run() {
     versions.forEach((item) => {
         logger.debug(JSON.stringify(item))
     })
+    await setupGit()
     // 将版本信息写入文件
+    await exec.exec("ls -alh")
     core.setOutput("version", `${data.tag_name}`)
     core.setOutput("update_content", `${data.body}`)
     logger.info("运行结束")
