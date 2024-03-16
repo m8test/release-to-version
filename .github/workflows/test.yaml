@@ -39,15 +39,10 @@ jobs:
     steps:
       - name: 下载仓库代码
         uses: actions/checkout@v4
-      - name: 打印环境变量
-        id: print_env
+      - name: 输出github工作目录
+        id: workspace
         run: |
           echo "workspace=$GITHUB_WORKSPACE" >> "$GITHUB_OUTPUT"
-          echo "GITHUB_ACTION_PATH=$GITHUB_ACTION_PATH"
-          echo "GITHUB_ENV=$GITHUB_ENV"
-          echo "GITHUB_OUTPUT=$GITHUB_OUTPUT"
-          echo "GITHUB_PATH=$GITHUB_PATH"
-          echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
       - name: 使用 actions
         id: release
         uses: ./.github/actions/version
@@ -55,7 +50,7 @@ jobs:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
           output_file: version.json
-          working_directory: ${{ steps.print_env.outputs.workspace }}
+          working_directory: ${{ steps.workspace.outputs.workspace }}
       - name: 打印输出结果
         run: |
           echo "最新版本: ${{steps.release.outputs.version}}"
