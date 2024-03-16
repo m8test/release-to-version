@@ -35,7 +35,7 @@ permissions:
 
 jobs:
   jest:
-    if: ${{ env.JEST }}
+    if: ${{ inputs.jest || github.event_name != 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: 下载代码
