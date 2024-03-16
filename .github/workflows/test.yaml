@@ -15,7 +15,7 @@ on:
 
 env:
   DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
-  REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
+  REPOSITORY: ${{ inputs.repository || github.repository }}
 
 permissions:
   contents: write

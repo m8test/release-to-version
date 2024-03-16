@@ -34,7 +34,14 @@ async function run() {
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
     logger.info(`仓库:${repository},工作目录:${workingDirectory},输出文件:${outputFile}`)
     // 请求仓库 release url
-    let data = await getLatestRelease(repository)
+    let data = null
+    try {
+        data = await getLatestRelease(repository)
+    } catch (e) {
+        core.setFailed(e.message)
+        logger.error("获取版本信息失败")
+        return
+    }
     logger.debug(JSON.stringify(data))
     let versions = getVersionInfo(data)
     // 遍历所有的版本信息

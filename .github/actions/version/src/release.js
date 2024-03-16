@@ -3,6 +3,11 @@ const axios = require("axios");
 async function getLatestRelease(repository) {
     const url = `https://api.github.com/repos/${repository}/releases/latest`
     return axios.get(url).then(res => {
+        // 如果失败返回这个
+        // {
+        //   "message": "Not Found",
+        //   "documentation_url": "https://docs.github.com/rest/releases/releases#get-the-latest-release"
+        // }
         return Promise.resolve(res.data)
     })
 }
