@@ -42,6 +42,7 @@ jobs:
         with:
           repository: m8test/release-to-version
       - name: 安装依赖并启动 jest
+        working-directory: ./.github/actions/version
         run: |
           npm install
           npm run test
