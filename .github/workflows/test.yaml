@@ -23,7 +23,7 @@ on:
 env:
   DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
   REPOSITORY: ${{ inputs.repository || github.repository }}
-  BRANCH: ${{ inputs.branch || "main" }}
+  BRANCH: ${{ inputs.branch || 'main' }}
 
 permissions:
   contents: write
