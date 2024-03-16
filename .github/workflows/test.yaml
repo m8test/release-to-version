@@ -42,6 +42,8 @@ jobs:
         with:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
+          output_name: version.json
+          working_directory: ${{ github.workspace }}
       - name: 打印输出结果
         run: |
           echo "最新版本: ${{steps.release.outputs.version}}"

@@ -32,7 +32,7 @@ async function run() {
     // 输出路径，和 workingDirectory 组合成完整路径
     const outputFile = core.getInput("output_file", {required: true})
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
-    logger.info(`仓库:${repository}`)
+    logger.info(`仓库:${repository},工作目录:${workingDirectory},输出文件:${outputFile}`)
     // 请求仓库 release url
     let data = await getLatestRelease(repository)
     logger.debug(JSON.stringify(data))
