@@ -9,8 +9,11 @@ inputs:
     description: 需要检查的仓库
     default: ""
     required: true
+  working_directory:
+    description: 用于指定git命令执行的目录
+    required: true
   output_file:
-    description: 用于指定版本信息的输出文件
+    description: 用于指定版本信息的输出文件，相对 working_directory 的路径
     default: "versions.json"
     required: true
 

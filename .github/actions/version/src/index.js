@@ -27,10 +27,10 @@ const setupLogger = ({debug, prefix} = {debug: false, prefix: ''}) => ({
 async function run() {
     const debug = core.getBooleanInput("debug")
     const repository = core.getInput("repository", {required: true})
+    // 工作路径
+    const workingDirectory = core.getInput("working_directory", {required: true})
     // 输出路径，和 workingDirectory 组合成完整路径
     const outputFile = core.getInput("output_file", {required: true})
-    // 工作路径
-    const workingDirectory = process.env.GITHUB_WORKSPACE
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
     logger.info(`仓库:${repository},工作目录:${workingDirectory},输出文件:${outputFile}`)
     // 请求仓库 release url

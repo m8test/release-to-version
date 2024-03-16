@@ -35,7 +35,10 @@ jobs:
     #      - jest
     steps:
       - name: 下载仓库代码
+        id: checkout
         uses: actions/checkout@v4
+        run: |
+          echo "workspace=$GITHUB_WORKSPACE" >> "$GITHUB_OUTPUT"
       - name: 打印环境变量
         run: | 
           echo "GITHUB_ACTION_PATH=$GITHUB_ACTION_PATH"
@@ -50,6 +53,7 @@ jobs:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
           output_file: version.json
+          working_directory: ${{ steps.checkout.outputs.workspace }}
       - name: 打印输出结果
         run: |
           echo "最新版本: ${{steps.release.outputs.version}}"
