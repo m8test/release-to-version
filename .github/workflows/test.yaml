@@ -36,6 +36,9 @@ jobs:
     steps:
       - name: 下载仓库代码
         uses: actions/checkout@v4
+      - name: 打印当前目录
+        run: |
+          ls -R
       - name: 使用 actions
         id: release
         uses: ./.github/actions/version
@@ -43,7 +46,7 @@ jobs:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
           output_file: version.json
-          working_directory: ${{ github.workspace }}
+          working_directory: ${{ GITHUB_WORKSPACE }}
       - name: 打印输出结果
         run: |
           echo "最新版本: ${{steps.release.outputs.version}}"
