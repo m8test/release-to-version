@@ -17,6 +17,9 @@ env:
   DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
   REPOSITORY: ${{ inputs.repository || 'kkevsekk1/AutoX' }}
 
+permissions:
+  contents: write
+
 jobs:
   #  jest:
   #    runs-on: ubuntu-latest
