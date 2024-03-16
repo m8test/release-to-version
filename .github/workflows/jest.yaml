@@ -1,0 +1,17 @@
+name: 运行jest
+run-name: "运行jest"
+on:
+  push:
+jobs:
+  jest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载代码
+        uses: actions/checkout@v4
+        with:
+          repository: m8test/release-to-version
+      - name: 安装依赖并启动 jest
+        working-directory: ./.github/actions/version
+        run: |
+          npm install
+          npm run test

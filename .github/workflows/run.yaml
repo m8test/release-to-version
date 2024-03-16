@@ -1,5 +1,5 @@
 name: "测试docker workflows是否正确执行"
-run-name: "测试docker workflows是否正确执行 | ${{ github.event_name }} 调试模式 - ${{ inputs.debug || github.event_name == 'push' }}"
+run-name: " run | ${{ github.event_name }} | debug - ${{ inputs.debug || github.event_name == 'push' }}"
 on:
   release:
     types:
@@ -19,10 +19,6 @@ on:
         type: string
         default: "main"
         description: 需要提交版本信息的分支
-      jest:
-        type: boolean
-        description: 是否启用测试
-        default: false
 
 env:
   DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
@@ -33,19 +29,6 @@ permissions:
   contents: write
 
 jobs:
-  jest:
-    if: ${{ inputs.jest || github.event_name != 'push' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: 下载代码
-        uses: actions/checkout@v4
-        with:
-          repository: m8test/release-to-version
-      - name: 安装依赖并启动 jest
-        working-directory: ./.github/actions/version
-        run: |
-          npm install
-          npm run test
   version:
     runs-on: ubuntu-latest
     steps:
