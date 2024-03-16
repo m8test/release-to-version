@@ -16,6 +16,10 @@ inputs:
     description: 用于指定版本信息的输出文件，相对 working_directory 的路径
     default: "versions.json"
     required: true
+  branch:
+    description: 需要提交版本信息的分支
+    default: main
+    required: true
 
 outputs:
   version:

@@ -31,6 +31,7 @@ async function run() {
     const workingDirectory = core.getInput("working_directory", {required: true})
     // 输出路径，和 workingDirectory 组合成完整路径
     const outputFile = core.getInput("output_file", {required: true})
+    const branch = core.getInput("branch", {required: true})
     const logger = setupLogger({debug, prefix: '[release-to-version]'});
     logger.info(`仓库:${repository},工作目录:${workingDirectory},输出文件:${outputFile}`)
     // 请求仓库 release url
@@ -60,9 +61,10 @@ async function run() {
     if (output.stdout.length > 0) {
         // 文件更改了
         logger.info(`发现新版本,开始提交`)
+        await exec.exec(`git checkout ${branch}`, [], {...commonExecOpts})
         await exec.exec("git add .", [], {...commonExecOpts})
         await exec.exec(`git commit -m "${data.body}"`, [], {...commonExecOpts})
-        await exec.exec(`git push"`, [], {...commonExecOpts})
+        await exec.exec(`git push -u origin ${branch}`, [], {...commonExecOpts})
     } else {
         logger.info(`没有发现新版本`)
     }

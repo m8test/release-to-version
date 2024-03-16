@@ -15,10 +15,15 @@ on:
         type: string
         default: ""
         description: 需要获取信息的仓库，必须为公开类型的仓库
+      branch:
+        type: string
+        default: "main"
+        description: 需要提交版本信息的分支
 
 env:
   DEBUG: ${{ inputs.debug || github.event_name == 'push' }}
   REPOSITORY: ${{ inputs.repository || github.repository }}
+  BRANCH: ${{ inputs.branch || "main" }}
 
 permissions:
   contents: write
@@ -54,6 +59,7 @@ jobs:
           repository: ${{ env.REPOSITORY }}
           output_file: version.json
           working_directory: ${{ steps.workspace.outputs.workspace }}
+          branch: ${{ env.BRANCH }}
       - name: 打印输出结果
         run: |
           echo "最新版本: ${{steps.release.outputs.version}}"
