@@ -55,10 +55,10 @@ jobs:
         id: release
         uses: ./.github/actions/version
         with:
-          debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
-          output_file: version.json
           working_directory: ${{ steps.workspace.outputs.workspace }}
+          debug: ${{ env.DEBUG }}
+          output_file: versions.json
           branch: ${{ env.BRANCH }}
       - name: 打印输出结果
         run: |

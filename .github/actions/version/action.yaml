@@ -2,9 +2,6 @@ name: Release To Version
 description: Get the version information from github release and save the version information to the github repository.
 
 inputs:
-  debug:
-    description: 是否输出调试信息
-    default: "false"
   repository:
     description: 需要检查的仓库
     default: ""
@@ -12,14 +9,18 @@ inputs:
   working_directory:
     description: 用于指定git命令执行的目录
     required: true
+  debug:
+    description: 是否输出调试信息
+    default: "false"
+    required: false
   output_file:
     description: 用于指定版本信息的输出文件，相对 working_directory 的路径
     default: "versions.json"
-    required: true
+    required: false
   branch:
     description: 需要提交版本信息的分支
     default: main
-    required: true
+    required: false
 
 outputs:
   version:
