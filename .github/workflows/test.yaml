@@ -46,7 +46,7 @@ jobs:
           debug: ${{ env.DEBUG }}
           repository: ${{ env.REPOSITORY }}
           output_file: version.json
-          working_directory: /home/runner/work/release-to-version/release-to-version/
+          working_directory: ${{ GITHUB_PATH }}
       - name: 打印输出结果
         run: |
           echo "最新版本: ${{steps.release.outputs.version}}"
