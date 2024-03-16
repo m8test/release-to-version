@@ -1,6 +1,9 @@
 name: "测试docker workflows是否正确执行"
 run-name: "测试docker workflows是否正确执行 | ${{ github.event_name }} 调试模式 - ${{ inputs.debug || github.event_name == 'push' }}"
 on:
+  release:
+    types:
+      - published
   push:
   workflow_dispatch:
     inputs:
