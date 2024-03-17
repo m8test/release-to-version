@@ -30,6 +30,7 @@ jobs:
       NDK_VERSION: ${{ inputs.ndk || '25.2.9519653' }}
       BUILD_TOOLS_VERSION: ${{ inputs.buildTools || '34.0.0' }}
       SDK_PLATFORM_VERSION: ${{ inputs.sdkPlatform || '34' }}
+      COMMAND_LINE_TOOLS_DIR: sdk/cmdline-tools/latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
@@ -43,29 +44,29 @@ jobs:
       - name: 新建sdk目录
         run: mkdir sdk
       - name: 列出当前目录内容
-        run: ls -alh
+        run: ls -R
       - name: 解压命令行工具
         run: unzip ${{ env.COMMAND_LINE_TOOLS }}
       - name: 列出命令行工具内容
-        run: ls -alh cmdline-tools
+        run: ls -R cmdline-tools
       - name: 移动命令行工具到sdk目录
         run: |
-          mkdir -p sdk/cmdline-tools/latest
-          mv cmdline-tools/* sdk/cmdline-tools/latest
+          mkdir -p ${{ env.COMMAND_LINE_TOOLS_DIR }}
+          mv cmdline-tools/* ${{ env.COMMAND_LINE_TOOLS_DIR }}
       - name: 列出sdk目录内容
-        run: ls -alh sdk
+        run: ls -R sdk
       - name: 安装 android-${{ env.SDK_PLATFORM_VERSION }}
-        run: echo y | sdk/cmdline-tools/bin/sdkmanager "platforms;android-${{ env.SDK_PLATFORM_VERSION }}" --sdk_root=$(pwd)/sdk
+        run: echo y | ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager "platforms;android-${{ env.SDK_PLATFORM_VERSION }}" --sdk_root=$(pwd)/sdk
       - name: 安装构建工具 ${{ env.BUILD_TOOLS_VERSION }}
-        run: echo y | sdk/cmdline-tools/bin/sdkmanager "build-tools;${{ env.BUILD_TOOLS_VERSION }}" --sdk_root=$(pwd)/sdk
+        run: echo y | ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager "build-tools;${{ env.BUILD_TOOLS_VERSION }}" --sdk_root=$(pwd)/sdk
       - name: 安装 ndk ${{ env.NDK_VERSION }}
-        run: echo y | sdk/cmdline-tools/bin/sdkmanager "ndk;${{ env.NDK_VERSION }}" --sdk_root=$(pwd)/sdk
+        run: echo y | ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager "ndk;${{ env.NDK_VERSION }}" --sdk_root=$(pwd)/sdk
       - name: 列出sdk内容
         run: tree sdk
       - name: 查看sdkmanager安装的内容
-        run: sdk/cmdline-tools/bin/sdkmanager --list --sdk_root=$(pwd)/sdk
+        run: ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager --list --sdk_root=$(pwd)/sdk
       - name: 查看当前目录内容
-        run: ls -alh $(pwd)
+        run: ls -R $(pwd)
 
 #      - name: upload lite python bundle assets
 #        uses: softprops/action-gh-release@v1
