@@ -1,0 +1,98 @@
+name: CI
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: please input tag name
+        required: true
+      sdkPlatform:
+        description: android sdk 版本
+        default: 34
+        required: true
+      buildTools:
+        description: 安卓构建工具版本
+        default: 34.0.0
+        required: true
+      ndk:
+        description: ndk版本
+        default: 25.2.9519653
+        required: true
+      java:
+        description: java版本
+        default: 17
+        required: true
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    env:
+      COMMAND_LINE_TOOLS: commandlinetools-linux-11076708_latest.zip
+    strategy:
+      matrix:
+        arch: [ armeabi-v7a, arm64-v8a, x86, x86_64 ]
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      - name: 下载安卓命令行工具
+        run: wget https://dl.google.com/android/repository/${{ COMMAND_LINE_TOOLS }}
+      - name: 新建sdk目录
+        run: mkdir sdk
+      - name: 列出当前目录内容
+        run: ls -alh
+      - name: 解压命令行工具
+        run: unzip ${{ COMMAND_LINE_TOOLS }}
+      - name: 列出命令行工具内容
+        run: ls -alh cmdline-tools
+      - name: 移动命令行工具到sdk目录
+        run: mv cmdline-tools sdk/
+      - name: 列出sdk目录内容
+        run: ls -alh sdk
+      - name: 安装 android-${{ inputs.sdkPlatform }}
+        run: echo y | sdk/cmdline-tools/bin/sdkmanager "platforms;android-${{ inputs.sdkPlatform }}" --sdk_root=$(pwd)/sdk
+      - name: 安装构建工具 ${{ inputs.buildTools }}
+        run: echo y | sdk/cmdline-tools/bin/sdkmanager "build-tools;${{ inputs.buildTools }}" --sdk_root=$(pwd)/sdk
+      - name: 安装 ndk ${{ inputs.ndk }}
+        run: echo y | sdk/cmdline-tools/bin/sdkmanager "ndk;${{ inputs.ndk }}" --sdk_root=$(pwd)/sdk
+      - name: 列出sdk内容
+        run: tree sdk
+      - name: 查看sdkmanager安装的内容
+        run: sdk/cmdline-tools/bin/sdkmanager --list --sdk_root=$(pwd)/sdk
+      - name: 安装java${{ inputs.java }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: ${{ inputs.java }}
+      - name: 查看当前目录内容
+        run: ls -alh $(pwd)
+
+#      - name: upload lite python bundle assets
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          tag_name: ${{ inputs.tag_name }}
+#          files:
+#            /tmp/python-bundle-lite-${{ matrix.arch }}.tar.gz
+#
+#      - name: upload lite python bundle
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: python-bundle-lite-${{ matrix.arch }}
+#          path: /tmp/python-bundle-lite-${{ matrix.arch }}.tar.gz # or path/to/artifact
+#
+#      - name: zip python full bundle
+#        run: |
+#          tar -cvf /tmp/python-bundle-full-${{ matrix.arch }}.tar ~/.local/share/python-for-android/
+#          gzip /tmp/python-bundle-full-${{ matrix.arch }}.tar
+#
+#      - name: upload full python bundle assets
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          tag_name: ${{ inputs.tag_name }}
+#          files:
+#            /tmp/python-bundle-full-${{ matrix.arch }}.tar.gz
+#
+#      - name: upload full python bundle
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: python-bundle-full-${{ matrix.arch }}
+#          path: /tmp/python-bundle-full-${{ matrix.arch }}.tar.gz # or path/to/artifact
