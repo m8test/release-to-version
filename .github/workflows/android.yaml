@@ -70,6 +70,10 @@ jobs:
           ls /opt/gradle/gradle-${{ env.GRADLE_VERSION }}
           export PATH=$PATH:/opt/gradle/gradle-${{ env.GRADLE_VERSION }}/bin
           gradle -v
+      - name: 更新 gradlew
+        run: |
+          gradle wrapper
+          ./gradlew wrapper --gradle-version=${{ env.GRADLE_VERSION }} --distribution-type=bin
 
 #      - name: upload lite python bundle assets
 #        uses: softprops/action-gh-release@v1
