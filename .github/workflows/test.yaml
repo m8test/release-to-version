@@ -12,5 +12,5 @@ jobs:
           destRepository: m8test/Test
           srcPath: .github/actions
           destPath: /
-          srcToken: ${{ GITHUB_TOKEN }}
+          srcToken: ${{ github.token }}
           destToken: ${{ secrets.TEST }}
