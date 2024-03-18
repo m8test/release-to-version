@@ -1,5 +1,4 @@
 const core = require("@actions/core")
-const github = require("@actions/github")
 const exec = require("@actions/exec")
 const {getLatestRelease, getVersionInfo} = require("./release");
 const fs = require("fs");
@@ -50,9 +49,7 @@ async function run() {
         logger.debug(JSON.stringify(item))
     })
     await setupGit()
-    const commonExecOpts = {
-        cwd: workingDirectory,
-    };
+    const commonExecOpts = {cwd: workingDirectory,};
     // 将版本信息写入文件
     let file = path.join(workingDirectory, outputFile);
     logger.debug(`开始写入版本信息到文件:${file}`)

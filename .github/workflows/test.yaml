@@ -1,0 +1,16 @@
+name: 复制文件
+on:
+  push:
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 复制
+        uses: ./.github/workflows/release-part-files.yaml
+        with:
+          srcRepository: m8test/release-to-version
+          destRepository: m8test/Test
+          srcPath: .github/actions
+          destPath: /
+          srcToken: ${{ GITHUB_TOKEN }}
+          destToken: ${{ secrets.TEST }}

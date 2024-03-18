@@ -1,27 +1,23 @@
 name: 构建安卓app
 on:
-  push:
+  #  push:
   workflow_dispatch:
     inputs:
-      sdkPlatform:
-        description: android sdk 版本
-        default: 34
-        required: true
-      buildTools:
-        description: 安卓构建工具版本
-        default: 34.0.0
-        required: true
-      ndk:
-        description: ndk版本
-        default: 25.2.9519653
-        required: true
       java:
         description: java版本
         default: 17
         required: true
-      gradle:
-        description: gradle版本
-        default: 8.6
+      gradleTask:
+        description: 构建app需要执行的gradle任务
+        default: ":document:assembleRelease"
+        required: true
+      apkPath:
+        description: 任务执行后生成的apk所在目录
+        default: "document/build/outputs/apk/release"
+        required: true
+      keystore:
+        description: 密钥所在路径，相对于项目根目录
+        default: "m8test.jks"
         required: true
 
 jobs:
@@ -29,13 +25,10 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      COMMAND_LINE_TOOLS: commandlinetools-linux-11076708_latest.zip
       JAVA_VERSION: ${{ inputs.java || '17' }}
-      NDK_VERSION: ${{ inputs.ndk || '25.2.9519653' }}
-      BUILD_TOOLS_VERSION: ${{ inputs.buildTools || '34.0.0' }}
-      SDK_PLATFORM_VERSION: ${{ inputs.sdkPlatform || '34' }}
-      COMMAND_LINE_TOOLS_DIR: sdk/cmdline-tools/latest
-      GRADLE_VERSION: ${{ inputs.gradle || '8.6' }}
+      GRADLE_TASK: ${{ inputs.gradleTask || ':document:assembleRelease' }}
+      APK_PATH: ${{ inputs.apkPath || 'document/build/outputs/apk/release' }}
+      KEYSTORE: ${{ inputs.keystore || 'm8test.jks' }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
@@ -44,36 +37,26 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: ${{ env.JAVA_VERSION }}
-      - name: 下载安卓命令行工具
-        run: wget https://dl.google.com/android/repository/${{ env.COMMAND_LINE_TOOLS }}
-      - name: 新建sdk目录
-        run: mkdir sdk
-      - name: 解压命令行工具
-        run: unzip ${{ env.COMMAND_LINE_TOOLS }}
-      - name: 移动命令行工具到sdk目录
+      - name: 授予 ./gradlew 执行权限
+        run: chmod +x ./gradlew
+      - name: 写入密钥信息
         run: |
-          mkdir -p ${{ env.COMMAND_LINE_TOOLS_DIR }}
-          mv cmdline-tools/* ${{ env.COMMAND_LINE_TOOLS_DIR }}
-      - name: 安装 android-${{ env.SDK_PLATFORM_VERSION }}
-        run: echo y | ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager "platforms;android-${{ env.SDK_PLATFORM_VERSION }}" --sdk_root=$(pwd)/sdk
-      - name: 安装构建工具 ${{ env.BUILD_TOOLS_VERSION }}
-        run: echo y | ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager "build-tools;${{ env.BUILD_TOOLS_VERSION }}" --sdk_root=$(pwd)/sdk
-      - name: 安装 ndk ${{ env.NDK_VERSION }}
-        run: echo y | ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager "ndk;${{ env.NDK_VERSION }}" --sdk_root=$(pwd)/sdk
-      - name: 查看sdkmanager安装的内容
-        run: ${{ env.COMMAND_LINE_TOOLS_DIR }}/bin/sdkmanager --list --sdk_root=$(pwd)/sdk
-      - name: 安装gradle
-        run: |
-          wget https://services.gradle.org/distributions/gradle-${{ env.GRADLE_VERSION }}-bin.zip 
-          mkdir -p /opt/gradle
-          unzip -d /opt/gradle gradle-${{ env.GRADLE_VERSION }}-bin.zip
-          ls /opt/gradle/gradle-${{ env.GRADLE_VERSION }}
-          export PATH=$PATH:/opt/gradle/gradle-${{ env.GRADLE_VERSION }}/bin
-          gradle -v
-      - name: 更新 gradlew
-        run: |
-          gradle wrapper
-          ./gradlew wrapper --gradle-version=${{ env.GRADLE_VERSION }} --distribution-type=bin
+          cat << EOF > local.properties
+          storePassword=${{ secrets.STORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=${{ env.KEYSTORE }}
+          EOF
+          cat local.properties
+      - name: 执行gradle任务
+        run: ./gradlew ${{ env.GRADLE_TASK }}
+#      - name: 检验生成的apk是否都已经签名了
+#        run: |
+#          for file in "${{ env.GITHUB_WORKSPACE }}/${{ env.APK_PATH }}"/*.apk ; do
+#            # 验证apk文件是否已经签名
+#            echo "正在验证apk签名信息:$file"
+##            ./apksigner verify "$file"
+#          done
 
 #      - name: upload lite python bundle assets
 #        uses: softprops/action-gh-release@v1

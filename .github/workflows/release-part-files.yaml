@@ -1,0 +1,47 @@
+name: 发布文件
+on:
+  workflow_call:
+    inputs:
+      srcRepository:
+        type: string
+        description: 源仓库
+        required: true
+      destRepository:
+        type: string
+        description: 目标仓库
+        required: true
+      srcPath:
+        type: string
+        description: 需要发布的文件路径
+        required: true
+      destPath:
+        type: string
+        description: 发布到仓库的哪个目录
+        default: "/"
+        required: true
+      srcToken:
+        type: string
+        description: 源仓库token
+        required: true
+      destToken:
+        type: string
+        description: 目标仓库token
+        required: true
+      debug:
+        type: boolean
+        description: 是否输出调试信息
+        required: true
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 复制文件
+        use: ./.github/workflows/copy
+        with:
+          srcRepository: ${{ inputs.srcRepository }}
+          destRepository: ${{ inputs.destRepository }}
+          srcPath: ${{ inputs.srcPath }}
+          destPath: ${{ inputs.destPath }}
+          srcToken: ${{ inputs.srcToken }}
+          destToken: ${{ inputs.destToken }}
+          debug: ${{ inputs.debug }}
