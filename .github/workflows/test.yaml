@@ -3,14 +3,11 @@ on:
   push:
 jobs:
   copy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 复制
-        uses: ./.github/workflows/release-part-files.yaml
-        with:
-          srcRepository: m8test/release-to-version
-          destRepository: m8test/Test
-          srcPath: .github/actions
-          destPath: /
-          srcToken: ${{ github.token }}
-          destToken: ${{ secrets.TEST }}
+    uses: ./.github/workflows/release-part-files.yaml
+    with:
+      srcRepository: m8test/release-to-version
+      destRepository: m8test/Test
+      srcPath: .github/actions
+      destPath: /
+      srcToken: ${{ github.token }}
+      destToken: ${{ secrets.TEST }}
