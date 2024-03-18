@@ -15,16 +15,17 @@ inputs:
       description: 发布到仓库的哪个目录
       default: "/"
       required: true
+    debug:
+      description: 是否输出调试信息
+      required: true
+secrets:
     srcToken:
       description: 源仓库token
       required: true
     destToken:
       description: 目标仓库token
       required: true
-    debug:
-      description: 是否输出调试信息
-      required: true
-
+    
 runs:
   using: node20
   main: dist/main.js
