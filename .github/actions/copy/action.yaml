@@ -21,6 +21,9 @@ inputs:
     destToken:
       description: 目标仓库token
       required: true
+    debug:
+      description: 是否输出调试信息
+      required: true
 
 runs:
   using: node20
