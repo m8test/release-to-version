@@ -43,6 +43,6 @@ jobs:
           destRepository: ${{ inputs.destRepository }}
           srcPath: ${{ inputs.srcPath }}
           destPath: ${{ inputs.destPath }}
-          srcToken: ${{ inputs.srcToken }}
-          destToken: ${{ inputs.destToken }}
+          srcToken: ${{ secrets.srcToken }}
+          destToken: ${{ secrets.destToken }}
           debug: ${{ inputs.debug }}
