@@ -4,10 +4,10 @@ on:
 jobs:
   copy:
     uses: ./.github/workflows/release-part-files.yaml
-    with:
+    secrets:
       srcRepository: m8test/release-to-version
       destRepository: m8test/Test
       srcPath: .github/actions
       destPath: /
-      srcToken: ${{ github.token }}
+      srcToken: ${{ secrets.GITHUB_TOKEN }}
       destToken: ${{ secrets.TEST }}
