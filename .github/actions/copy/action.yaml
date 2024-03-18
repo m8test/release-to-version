@@ -18,7 +18,6 @@ inputs:
     debug:
       description: 是否输出调试信息
       required: true
-secrets:
     srcToken:
       description: 源仓库token
       required: true
