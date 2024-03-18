@@ -37,7 +37,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: 复制文件
-        uses: ./.github/workflows/copy
+        uses: ./.github/actions/copy
         with:
           srcRepository: ${{ inputs.srcRepository }}
           destRepository: ${{ inputs.destRepository }}
