@@ -19,17 +19,16 @@ on:
         description: 发布到仓库的哪个目录
         default: "/"
         required: true
-      srcToken:
-        type: string
-        description: 源仓库token
-        required: true
-      destToken:
-        type: string
-        description: 目标仓库token
-        required: true
       debug:
         type: boolean
         description: 是否输出调试信息
+        required: true
+    secrets:
+      srcToken:
+        description: 源仓库token
+        required: true
+      destToken:
+        description: 目标仓库token
         required: true
 jobs:
   copy:
