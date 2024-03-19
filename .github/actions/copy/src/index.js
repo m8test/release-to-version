@@ -49,7 +49,7 @@ async function run() {
     logger.debug("开始克隆项目")
     await clone(workingDirectory, srcToken, srcRepository)
     await clone(workingDirectory, destToken, destRepository)
-    await exec.exec(`tree ${workingDirectory}`)
+    await exec.exec(`tree -a ${workingDirectory}`)
     logger.debug("复制文件")
     let srcFullPath = `${workingDirectory}/${srcRepository}/${srcPath}`
     let destFullPath = `${workingDirectory}/${destRepository}/${destPath}`
