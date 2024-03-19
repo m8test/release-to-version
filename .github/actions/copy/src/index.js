@@ -63,9 +63,13 @@ async function run() {
     let output = await exec.getExecOutput("git status -s", [], {...commonExecOpts})
     if (output.stdout.length > 0) {
         logger.info("文件更改")
+        logger.debug("设置环境变量")
         await exec.exec(`export GITHUB_TOKEN="${destToken}"`)
+        logger.debug("添加更改文件")
         await exec.exec("git add .", [], {...commonExecOpts})
+        logger.debug("提交更新文件")
         await exec.exec(`git commit -m "更新文件"`, [], {...commonExecOpts})
+        logger.debug("推送更改")
         await exec.exec(`git push`, [], {...commonExecOpts})
     } else {
         logger.info("文件没有更改")
