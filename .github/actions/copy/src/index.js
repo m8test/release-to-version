@@ -63,7 +63,7 @@ async function run() {
     let output = await exec.getExecOutput("git status -s", [], {...commonExecOpts})
     if (output.stdout.length > 0) {
         logger.info("文件更改")
-        await exec.exec(`export GITHUB_TOKEN=${destToken}`)
+        await exec.exec(`export GITHUB_TOKEN="${destToken}"`)
         await exec.exec("git add .", [], {...commonExecOpts})
         await exec.exec(`git commit -m "更新文件"`, [], {...commonExecOpts})
         await exec.exec(`git push`, [], {...commonExecOpts})
