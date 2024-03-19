@@ -40,12 +40,11 @@ async function run() {
     const destRepository = core.getInput("destRepository", {required: true})
     const srcRepository = core.getInput("srcRepository", {required: true})
     const logger = setupLogger({debug, prefix: '[copy]'});
-    const home = process.env['HOME']
-    logger.info(`用户目录:${home},源仓库:${srcRepository},目标仓库:${destRepository},源目录:${srcPath},目标目录:${destPath}`)
+    logger.info(`源仓库:${srcRepository},目标仓库:${destRepository},源目录:${srcPath},目标目录:${destPath}`)
     core.setSecret(srcToken)
     core.setSecret(destToken)
     // 生成随机目录
-    let workingDirectory = `${home}/${generateRandomString(10)}`
+    let workingDirectory = `~/${generateRandomString(10)}`
     await exec.exec(`mkdir -p ${workingDirectory}`, [])
     logger.debug("开始克隆项目")
     await clone(workingDirectory, srcToken, srcRepository)
@@ -63,8 +62,6 @@ async function run() {
     let output = await exec.getExecOutput("git status -s", [], {...commonExecOpts})
     if (output.stdout.length > 0) {
         logger.info("文件更改")
-        logger.debug("设置环境变量")
-        await exec.exec(`export GITHUB_TOKEN="${destToken}"`)
         logger.debug("添加更改文件")
         await exec.exec("git add .", [], {...commonExecOpts})
         logger.debug("提交更新文件")
