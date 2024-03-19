@@ -40,11 +40,12 @@ async function run() {
     const destRepository = core.getInput("destRepository", {required: true})
     const srcRepository = core.getInput("srcRepository", {required: true})
     const logger = setupLogger({debug, prefix: '[copy]'});
-    logger.info(`源仓库:${srcRepository},目标仓库:${destRepository},源目录:${srcPath},目标目录:${destPath}`)
+    const home = process.env['HOME']
+    logger.info(`用户目录:${home},源仓库:${srcRepository},目标仓库:${destRepository},源目录:${srcPath},目标目录:${destPath}`)
     core.setSecret(srcToken)
     core.setSecret(destToken)
     // 生成随机目录
-    let workingDirectory = `~/${generateRandomString(10)}`
+    let workingDirectory = `${home}/${generateRandomString(10)}`
     await exec.exec(`mkdir -p ${workingDirectory}`, [])
     logger.debug("开始克隆项目")
     await clone(workingDirectory, srcToken, srcRepository)
