@@ -52,11 +52,13 @@ async function run() {
     await clone(workingDirectory, destToken, destRepository)
     await exec.exec(`tree -a ${workingDirectory}`)
     logger.debug("复制文件")
-    let srcFullPath = `${workingDirectory}/${srcRepository}/${srcPath}`
-    let destFullPath = `${workingDirectory}/${destRepository}/${destPath}`
+    let destRepositoryName = destRepository.split("/")[1];
+    let srcRepositoryName = srcRepository.split("/")[1];
+    let srcFullPath = `${workingDirectory}/${srcRepositoryName}/${srcPath}`
+    let destFullPath = `${workingDirectory}/${destRepositoryName}/${destPath}`
     await exec.exec(`mkdir -p ${destFullPath}`)
     await exec.exec(`cp -r ${srcFullPath} ${destFullPath}`)
-    let commonExecOpts = {cwd: `${workingDirectory}/${destRepository}`}
+    let commonExecOpts = {cwd: `${workingDirectory}/${destRepositoryName}`}
     await setupGit()
     let output = await exec.getExecOutput("git status -s", [], {...commonExecOpts})
     if (output.stdout.length > 0) {
