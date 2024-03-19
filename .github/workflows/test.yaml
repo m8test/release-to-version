@@ -7,7 +7,7 @@ jobs:
     with:
       srcRepository: m8test/release-to-version
       destRepository: m8test/Test
-      srcPath: .github/actions/
+      srcPath: versions.json
       destPath: "."
       debug: true
     secrets:
