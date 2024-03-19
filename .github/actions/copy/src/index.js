@@ -49,13 +49,10 @@ async function run() {
     logger.debug("开始克隆项目")
     await clone(workingDirectory, srcToken, srcRepository)
     await clone(workingDirectory, destToken, destRepository)
+    await exec.exec(`tree ${workingDirectory}`)
     logger.debug("复制文件")
     let srcFullPath = `${workingDirectory}/${srcRepository}/${srcPath}`
     let destFullPath = `${workingDirectory}/${destRepository}/${destPath}`
-    logger.debug("源目录结构树")
-    await exec.exec(`tree ${srcFullPath}`)
-    logger.debug("目标目录结构树")
-    await exec.exec(`tree ${destFullPath}`)
     await exec.exec(`mkdir -p ${destFullPath}`)
     await exec.exec(`cp -r ${srcFullPath} ${destFullPath}`)
     let commonExecOpts = {cwd: `${workingDirectory}/${destRepository}`}
